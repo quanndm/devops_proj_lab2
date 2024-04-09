@@ -95,3 +95,8 @@ Source: clone from https://github.com/bradtraversy/storybooks
 - result:
     ![result manual deploy staging](./static/image15.png)
     ![result manual deploy staging](./static/image16.png)
+
+## Deploy with CI/CD github action
+- result
+    ![CI/CD pipeline](./static/image17.png)
+    ![CI/CD pipeline](./static/image18.png)
