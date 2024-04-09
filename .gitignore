@@ -1,0 +1,5 @@
+node_modules
+config/config.env
+client_secret*
+terraform/.terraform*
+terraform/keypair/project-kp*
