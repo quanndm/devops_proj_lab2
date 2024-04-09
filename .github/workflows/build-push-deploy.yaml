@@ -8,7 +8,7 @@ on:
 env:
   ENV: (github.ref == 'refs/heads/master' && 'staging' ) || (github.ref == 'refs/heads/prod' && 'production' )
   EC2_INSTANCE_ID: (github.ref == 'refs/heads/master' && ${{vars.STAGING_EC2_INSTANCE_ID}}) || (github.ref == 'refs/heads/prod' && ${{vars.PROD_EC2_INSTANCE_ID}} )
-  MONGODB_PRIVATE_IP: ${{ env.ENV }} ==  'staging' && ${{secrets.MONGODB_PRIVATE_IP}} || ${{secrets.PROD_MONGODB_PRIVATE_IP}}
+  MONGODB_PRIVATE_IP: (github.ref == 'refs/heads/master' && ${{secrets.MONGODB_PRIVATE_IP}}) || (github.ref == 'refs/heads/prod' && ${{secrets.PROD_MONGODB_PRIVATE_IP}} )
 
 jobs:
   setup-build-push-deploy-pipeline:
