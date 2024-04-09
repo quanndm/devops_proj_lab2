@@ -1,0 +1,55 @@
+name: Build and Deploy to AWS EC2 intance
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  ENV: (github.ref == 'refs/heads/master' && 'staging' ) || (github.ref == 'refs/heads/prod' && 'production' )
+  EC2_INSTANCE_ID: (github.ref == 'refs/heads/master' && ${{var.STAGING_EC2_INSTANCE_ID}}) || (github.ref == 'refs/heads/prod' && ${{var.PROD_EC2_INSTANCE_ID}} )
+
+jobs:
+  setup-build-push-deploy-pipeline:
+    name: setup, build, push and deploy
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: install aws cli
+        uses: unfor19/install-aws-cli-action@v1
+        with:
+          version: 2 # default
+          verbose: false # default
+          arch: amd64
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Set ENV
+        run: |-
+          if [ ${GITHUB_REF##*/} = "master" ]; then
+            echo "ENV=staging" >> $GITHUB_ENV
+          else 
+            echo "ENV=production" >> $GITHUB_ENV
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Build docker image
+      - name: Build
+        run: |-
+          make build MONGODB_PRIVATE_IP=${{ env.ENV == "staging" && secrets.MONGODB_PRIVATE_IP || secrets.PROD_MONGODB_PRIVATE_IP}}  GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+
+      # Push the Docker image to Google Container Registry
+      - name: Publish
+        run: |-
+          docker login -u ${{ secrets.CI_REGISTRY_USER }} -p ${{ secrets.CI_REGISTRY_PASSWORD }}  && make push ENV=${{ env.ENV }} DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}
+
+      - name: Deploy
+        run: |-
+          make deploy ENV=${{ env.ENV }} EC2InstanceId=${{env.EC2_INSTANCE_ID}} DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}

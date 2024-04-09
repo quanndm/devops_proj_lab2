@@ -32,8 +32,8 @@ terraform-output:
 	cd terraform &&  terraform workspace select ${ENV} && terraform output
 ########
 
-VERSION?=latest
-LOCAL_TAG=storybooks-app:${VERSION}
+GITHUB_SHA?=latest
+LOCAL_TAG=storybooks-app:${GITHUB_SHA}
 REMOTE_TAG=${DOCKERHUB_USERNAME}/${LOCAL_TAG}
 CONTAINER_NAME=storybooks
 

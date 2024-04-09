@@ -26,8 +26,4 @@ variable "environment" {
   type = string
 }
 
-variable "custom_domain" {
-  type        = string
-  description = "my custom domain"
-}
 

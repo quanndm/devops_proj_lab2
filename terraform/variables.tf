@@ -43,6 +43,4 @@ variable "application_instance_type" {
 
 }
 
-variable "custom_domain" {
 
-}

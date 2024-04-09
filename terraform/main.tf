@@ -18,7 +18,6 @@ module "network" {
   public_subnets     = var.public_subnets
   private_subnets    = var.private_subnets
   environment        = var.environment
-  custom_domain      = var.custom_domain
 }
 
 # security
