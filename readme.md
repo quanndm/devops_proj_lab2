@@ -101,3 +101,10 @@ Source: clone from https://github.com/bradtraversy/storybooks
     ![CI/CD pipeline](./static/image17.png)
     ![CI/CD pipeline](./static/image18.png)
     ![CI/CD pipeline](./static/image19.png)
+- result in production:
+    ![CI/CD pipeline](./static/image20.png)
+
+## Note: github action variables - secrets
+- To use github actions variables and secrets, please add it to repository before running pipeline
+    ![Note](./static/image21.png)
+    ![Note](./static/image22.png)
