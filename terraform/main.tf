@@ -6,7 +6,7 @@ provider "aws" {
 # keypair
 resource "aws_key_pair" "project-kp" {
   public_key = file(var.keypair_path)
-  key_name   = "project-kp"
+  key_name   = var.name_kp
 }
 
 

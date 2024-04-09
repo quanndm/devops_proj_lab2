@@ -100,3 +100,4 @@ Source: clone from https://github.com/bradtraversy/storybooks
 - result
     ![CI/CD pipeline](./static/image17.png)
     ![CI/CD pipeline](./static/image18.png)
+    ![CI/CD pipeline](./static/image19.png)

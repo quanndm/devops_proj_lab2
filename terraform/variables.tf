@@ -6,8 +6,7 @@ variable "region" {
 
 
 variable "keypair_path" {
-  type    = string
-  default = "./keypair/project-kp.pub"
+  type = string
 }
 
 variable "availability_zones" {
@@ -44,3 +43,6 @@ variable "application_instance_type" {
 }
 
 
+variable "name_kp" {
+
+}

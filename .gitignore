@@ -3,3 +3,4 @@ config/config.env
 client_secret*
 terraform/.terraform*
 terraform/keypair/project-kp*
+terraform/keypair/prod-project-kp*
